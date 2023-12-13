@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'restaurante.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'restaurante',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',  # Puedes cambiarlo si tu base de datos está en otro lugar
+        'PASSWORD': 'z\MU:Mhx|>}n=Qd$',
+        'HOST': '34.171.173.225',  # Puedes cambiarlo si tu base de datos está en otro lugar
         'PORT': '5432',       # Puerto por defecto de PostgreSQL
     }
 }
@@ -106,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 LANGUAGE_CODE = 'en-us'
 

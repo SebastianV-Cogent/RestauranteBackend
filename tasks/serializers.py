@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Enfermedad, Intolerancias, Necesidades, Preferencias, ListaEnfermedades, ListaIntolerancias, ListaNecesidades, ListaPreferencias, Usuario
+from .models import Enfermedades, Intolerancias, Necesidades, Preferencias, ListaEnfermedades, ListaIntolerancias, ListaNecesidades, ListaPreferencias, Usuario
 
 class EnfermedadSerializer(serializers.ModelSerializer):
   class Meta:
-      model = Enfermedad
+      model = Enfermedades
       fields = '__all__'
 
 class IntoleranciasSerializer(serializers.ModelSerializer):
