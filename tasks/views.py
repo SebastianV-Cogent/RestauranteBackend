@@ -48,8 +48,7 @@ def actualizarUsuario(request):
     usuario.password = payload.get('password', usuario.password)
 
     usuario.save()
-    usuario_serializado = serializers.serialize('json', [usuario])
-    return JsonResponse({"message": "usuario actualizado exitosamente", "data": usuario_serializado}, safe=False)
+    return JsonResponse(usuario, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
 
@@ -103,9 +102,8 @@ def obtenerSucursal(request):
   if request.method=='GET':
     payload = json.loads(request.body.decode('utf-8'))
     id = payload.get('id')
-    sucursal = Sucursales.objects.get(id=id)
-    sucursal_serializado = serializers.serialize('json', [sucursal])
-    return JsonResponse({"data": sucursal_serializado}, safe=False)
+    sucursal = list(Sucursales.objects.filter(id=id).values())
+    return JsonResponse(sucursal, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -142,8 +140,8 @@ def crearListaIntolerancias(request):
       idIntolerancia_instancia = Intolerancias.objects.get(id=idIntolerancia)
 
       listaCreada = ListaIntolerancias(
-        usuario = idUsuario_instancia,
-        intolerancias = idIntolerancia_instancia
+        usuario = idUsuario,
+        intolerancias = idIntolerancia
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de intolerancias agregada"}, safe=False)
@@ -153,9 +151,8 @@ def crearListaIntolerancias(request):
 @csrf_exempt
 def obtenerIntolerancias(request):
   if request.method=='GET':
-    intolerancias = Intolerancias.objects.all()
-    intolerancias_serializado = serializers.serialize('json', intolerancias)
-    return JsonResponse({"data": intolerancias_serializado}, safe=False)
+    intolerancias = Intolerancias.objects.all().values()
+    return JsonResponse(intolerancias, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -184,7 +181,7 @@ def crearListaIngredientes(request):
       idIngrediente_instancia = Ingredientes.objects.get(id=idIngrediente)
 
       listaCreada = ListaIngredientes(
-        platillo = idPlatillo_instancia,
+        platillo = idPlatillo,
         ingredientes = idIngrediente
       )
       listaCreada.save()
@@ -225,8 +222,8 @@ def crearListaNecesidades(request):
       idNecesidad_instancia = Necesidades.objects.get(id=idNecesidad)
 
       listaCreada = ListaNecesidades(
-        usuario = idUsuario_instancia,
-        neecesidades = idNecesidad_instancia
+        usuario = idUsuario,
+        neecesidades = idNecesidad
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de necesidades agregada"}, safe=False)
@@ -236,9 +233,8 @@ def crearListaNecesidades(request):
 @csrf_exempt
 def obtenerNecesidades(request):
   if request.method=='GET':
-    necesidades = Necesidades.objects.all()
-    necesidades_serializado = serializers.serialize('json', necesidades)
-    return JsonResponse({"data": necesidades_serializado}, safe=False)
+    necesidades = list(Necesidades.objects.all().values())
+    return JsonResponse(necesidades, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -267,8 +263,8 @@ def crearListaPreferencias(request):
       idPreferencia_instancia = Preferencias.objects.get(id=idPreferencia)
 
       listaCreada = ListaPreferencias(
-        usuario = idUsuario_instancia,
-        preferencias = idPreferencia_instancia
+        usuario = idUsuario,
+        preferencias = idPreferencia
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de preferencias agregada"}, safe=False)
@@ -278,9 +274,8 @@ def crearListaPreferencias(request):
 @csrf_exempt
 def obtenerPreferencias(request):
   if request.method=='GET':
-    preferencias = Preferencias.objects.all()
-    preferencias_serializado = serializers.serialize('json', preferencias)
-    return JsonResponse({"data": preferencias_serializado}, safe=False)
+    preferencias = list(Preferencias.objects.all().values())
+    return JsonResponse(preferencias, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -309,8 +304,8 @@ def crearListaEnfermedades(request):
       idEnfermedad_instancia = Enfermedades.objects.get(id=idEnfermedad)
 
       listaCreada = ListaEnfermedades(
-        usuario = idUsuario_instancia,
-        enfermedades = idEnfermedad_instancia
+        usuario = idUsuario,
+        enfermedades = idEnfermedad
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de enfermedades agregada"}, safe=False)
@@ -329,8 +324,8 @@ def crearListaAlergias(request):
       idIngrediente_instancia = Ingredientes.objects.get(id=idIngrediente)
 
       listaCreada = ListaAlergias(
-        usuario = idUsuario_instancia,
-        ingredientes = idIngrediente_instancia
+        usuario = idUsuario,
+        ingredientes = idIngrediente
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de alergias agregada"}, safe=False)
@@ -340,9 +335,8 @@ def crearListaAlergias(request):
 @csrf_exempt
 def obtenerEnfermedades(request):
   if request.method=='GET':
-    enfermedades = Enfermedades.objects.all()
-    enfermedades_serializado = serializers.serialize('json', enfermedades)
-    return JsonResponse({"data": enfermedades_serializado}, safe=False)
+    enfermedades = list(Enfermedades.objects.all().values)
+    return JsonResponse(enfermedades, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
 
@@ -354,7 +348,7 @@ def crearPedido(request):
     idUsuario = payload.get('idUsuario')
     idUsuario_instancia = Usuario.objects.get(id=idUsuario)
     pedidoCreado = Pedidos(
-      usuario = idUsuario_instancia
+      usuario = idUsuario
     )
     pedidoCreado.save()
     return JsonResponse({"message": "Pedido agregado"}, safe=False)
@@ -375,16 +369,16 @@ def crearListaPedidos(request):
       idPlatillo_instancia = Platillos.objects.get(id=idPlatillo)
 
       listaCreada = ListaPedidos(
-        usuario = idUsuario_instancia,
-        pedido = idPedido_instancia,
-        platillo = idPlatillo_instancia
+        usuario = idUsuario,
+        pedido = idPedido,
+        platillo = idPlatillo
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de pedidos agregada"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
-####################################################### CRUD DE PEDIDOS ####################################################
+####################################################### CRUD DE PLATILLOS ##################################################
 @csrf_exempt
 def obtenerPlatillosRecomendados(request):
   if request.method=='POST':
@@ -395,5 +389,51 @@ def obtenerPlatillosRecomendados(request):
         results = cursor.fetchall()
     result_serialziado = serializers.serialize('json', results)
     return JsonResponse({"data": result_serialziado}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def obtenerTodosLosPlatillos(request):
+  if request.method=='GET':
+    platillos = list(Platillos.objects.all().values())
+    return JsonResponse(platillos, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def crearPlatillo(request):
+  if request.method=='POST':
+    payload = json.loads(request.body.decode('utf-8'))
+    idPreferencia = payload.get('idPreferencia')
+    idPreferencia_instancia = Preferencias.objects.get(id=idPreferencia)
+    platilloCreado = Platillos(
+      nombre = payload.get('nombre'),
+      descripcion = payload.get('descripcion'),
+      costo = payload.get('costo'),
+      url_imagen = payload.get('url_imagen'),
+      platillo_dia = payload.get('platillo_dia'),
+      preferencias_id = idPreferencia
+    )
+    platilloCreado.save()
+    return JsonResponse({"message": "Platillo agregado"}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def actualizarPlatillo(request):
+  if request.method=='PUT':
+    payload = json.loads(request.body.decode('utf-8'))
+    idPreferencia = payload.get('idPreferencia')
+    idPreferencia_instancia = Preferencias.objects.get(id=idPreferencia)
+    platilloCreado = Platillos(
+      nombre = payload.get('nombre'),
+      descripcion = payload.get('descripcion'),
+      costo = payload.get('costo'),
+      url_imagen = payload.get('url_imagen'),
+      platillo_dia = payload.get('platillo_dia'),
+      preferencias_id = idPreferencia
+    )
+    platilloCreado.save()
+    return JsonResponse({"message": "Platillo agregado"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
