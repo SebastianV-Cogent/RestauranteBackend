@@ -27,6 +27,7 @@ urlpatterns = [
         #Rutas para la sucursal
     path('sucursal/crearSucursal', views.crearSucursal),
     path('sucursal/obtenerSucursal', views.obtenerSucursal),
+    path('sucursal/obtenerTodasLasSucursales', views.obtenerTodasLasSucursales),
         #Rutas para intolerancias
     path('intolerancias/crearIntolerancia', views.crearIntolerancias),
     path('intolerancias/obtenerIntolerancias', views.obtenerIntolerancias),

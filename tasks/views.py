@@ -1,4 +1,5 @@
 import json
+from django.http import HttpResponse
 from django.http.response import JsonResponse
 from tasks.models import Usuario, Sucursales, Intolerancias, Ingredientes, Necesidades, Preferencias, Enfermedades, ListaIntolerancias, ListaNecesidades, ListaAlergias, ListaEnfermedades, ListaIngredientes, ListaPedidos, ListaPreferencias, Platillos, Pedidos
 from django.core import serializers
@@ -58,9 +59,8 @@ def obtenerUsuario(request):
     payload = json.loads(request.body.decode('utf-8'))
     telefono = payload.get('telefono')
     password=payload.get('password')
-    usuario = Usuario.objects.get(telefono=telefono, password=password)
-    usuario_serializado = serializers.serialize('json', [usuario])
-    return JsonResponse({"data": usuario_serializado}, safe=False)
+    usuario=list(Usuario.objects.filter(telefono=telefono, password=password).values())
+    return JsonResponse(usuario, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
 
@@ -106,6 +106,14 @@ def obtenerSucursal(request):
     sucursal = Sucursales.objects.get(id=id)
     sucursal_serializado = serializers.serialize('json', [sucursal])
     return JsonResponse({"data": sucursal_serializado}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def obtenerTodasLasSucursales(request):
+  if request.method=='GET':
+    sucursales = list(Sucursales.objects.all().values())
+    return JsonResponse(sucursales, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
 
@@ -187,9 +195,8 @@ def crearListaIngredientes(request):
 @csrf_exempt
 def obtenerIngredientes(request):
   if request.method=='GET':
-    ingredientes = Ingredientes.objects.all()
-    ingredientes_serializado = serializers.serialize('json', ingredientes)
-    return JsonResponse({"data": ingredientes_serializado}, safe=False)
+    ingredientes = list(Ingredientes.objects.all().values())
+    return JsonResponse(ingredientes, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
