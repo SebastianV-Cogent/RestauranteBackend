@@ -393,7 +393,7 @@ def crearPedido(request):
 @csrf_exempt
 def obtenerTodosLosPedidos(request):
   if request.method=='GET':
-    pedidos = list(Pedidos.objects.all().values)
+    pedidos = list(Pedidos.objects.all().values())
     return JsonResponse(pedidos, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)

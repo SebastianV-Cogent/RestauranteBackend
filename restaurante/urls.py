@@ -56,7 +56,7 @@ urlpatterns = [
         #Rutas para pedidos
     path('pedidos/crearPedido', views.crearPedido),
     path('pedidos/crearListaPedidos', views.crearListaPedidos),
-    path('pedidos/MostraTodosLosPedidos', views.obtenerTodosLosPedidos),
+    path('pedidos/MostrarTodosLosPedidos', views.obtenerTodosLosPedidos),
     path('pedidos/MostrarInformacionDelPedido', views.obtenerPedido),
     path('pedidos/completarPedido', views.eliminarPedido),
         #Rutas para platillos
