@@ -84,7 +84,7 @@ def actualizarSucursal(request):
   if request.method=='PUT':
     payload = json.loads(request.body.decode('utf-8'))
     id = payload.get('id')
-    sucursal = Sucursales.objects.get(id=id) ##obtener el usuario en base a su id
+    sucursal = Sucursales.objects.get(id=id)
 
     sucursal.nombre = payload.get('nombre', sucursal.nombre)
     sucursal.direccion = payload.get('direccion', sucursal.direccion)
@@ -112,6 +112,17 @@ def obtenerTodasLasSucursales(request):
   if request.method=='GET':
     sucursales = list(Sucursales.objects.all().values())
     return JsonResponse(sucursales, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def eliminarSucursal(request):
+  if request.method=='DELETE':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    sucursalEliminada = Sucursales.objects.get(id=id)
+    sucursalEliminada.delete()
+    return JsonResponse({"message": "Sucursal eliminada"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
 
@@ -170,6 +181,19 @@ def crearIngredientes(request):
     return JsonResponse({"message": "Bad request"}, safe=False)
   
 @csrf_exempt
+def actualizarIngredientes(request):
+  if request.method=='PUT':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    ingrediente = Ingredientes.objects.get(id=id)
+
+    ingrediente.nombre = payload.get('nombre', ingrediente.nombre)
+    ingrediente.save()
+    return JsonResponse({"message": "Ingrediente actualizado"}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
 def crearListaIngredientes(request):
   if request.method=='POST':
     payload = json.loads(request.body.decode('utf-8'))
@@ -194,6 +218,17 @@ def obtenerIngredientes(request):
   if request.method=='GET':
     ingredientes = list(Ingredientes.objects.all().values())
     return JsonResponse(ingredientes, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def eliminarIngrediente(request):
+  if request.method=='DELETE':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    ingredienteEliminado = Ingredientes.objects.get(id=id)
+    ingredienteEliminado.delete()
+    return JsonResponse({"message": "Ingrediente eliminado"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -356,6 +391,24 @@ def crearPedido(request):
     return JsonResponse({"message": "Bad request"}, safe=False)
   
 @csrf_exempt
+def obtenerTodosLosPedidos(request):
+  if request.method=='GET':
+    pedidos = list(Pedidos.objects.all().values)
+    return JsonResponse(pedidos, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def obtenerPedido(request):
+  if request.method=='GET':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    pedido = list(Pedidos.objects.filter(id=id).values())
+    return JsonResponse(pedido, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
 def crearListaPedidos(request):
   if request.method=='POST':
     payload = json.loads(request.body.decode('utf-8'))
@@ -375,6 +428,17 @@ def crearListaPedidos(request):
       )
       listaCreada.save()
     return JsonResponse({"message": "Lista de pedidos agregada"}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def eliminarPedido(request):
+  if request.method=='DELETE':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    pedidoEliminado = Pedidos.objects.get(id=id)
+    pedidoEliminado.delete()
+    return JsonResponse({"message": "Pedido eliminado"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)
   
@@ -435,5 +499,16 @@ def actualizarPlatillo(request):
     )
     platilloCreado.save()
     return JsonResponse({"message": "Platillo agregado"}, safe=False)
+  else:
+    return JsonResponse({"message": "Bad request"}, safe=False)
+  
+@csrf_exempt
+def eliminarPlatillo(request):
+  if request.method=='DELETE':
+    payload = json.loads(request.body.decode('utf-8'))
+    id = payload.get('id')
+    platilloEliminado = Platillos.objects.get(id=id)
+    platilloEliminado.delete()
+    return JsonResponse({"message": "Platillo eliminado"}, safe=False)
   else:
     return JsonResponse({"message": "Bad request"}, safe=False)

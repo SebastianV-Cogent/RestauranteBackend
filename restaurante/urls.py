@@ -28,6 +28,8 @@ urlpatterns = [
     path('sucursal/crearSucursal', views.crearSucursal),
     path('sucursal/obtenerSucursal', views.obtenerSucursal),
     path('sucursal/obtenerTodasLasSucursales', views.obtenerTodasLasSucursales),
+    path('sucursal/actualizarSucursal', views.actualizarSucursal),
+    path('sucursal/eliminarSucursal', views.eliminarSucursal),
         #Rutas para intolerancias
     path('intolerancias/crearIntolerancia', views.crearIntolerancias),
     path('intolerancias/obtenerIntolerancias', views.obtenerIntolerancias),
@@ -35,6 +37,8 @@ urlpatterns = [
         #Rutas para ingredientes
     path('ingredientes/crearIngrediente', views.crearIngredientes),
     path('ingredientes/obtenerIngredientes', views.obtenerIngredientes),
+    path('ingredientes/actualizaringrediente', views.actualizarIngredientes),
+    path('ingredientes/eliminarIngrediente', views.eliminarIngrediente ),
     path('ingredientes/crearListaIngredientes', views.crearListaIngredientes),
         #Rutas para necesidades
     path('necesidades/crearNecesidad', views.crearNecesidades),
@@ -52,9 +56,13 @@ urlpatterns = [
         #Rutas para pedidos
     path('pedidos/crearPedido', views.crearPedido),
     path('pedidos/crearListaPedidos', views.crearListaPedidos),
-        #Rutas para pedidos
+    path('pedidos/MostraTodosLosPedidos', views.obtenerTodosLosPedidos),
+    path('pedidos/MostrarInformacionDelPedido', views.obtenerPedido),
+    path('pedidos/completarPedido', views.eliminarPedido),
+        #Rutas para platillos
     path('recomendaciones/obtenerPlatillosRecomendados', views.obtenerPlatillosRecomendados),
     path('recomendaciones/obtenerTodosLosPlatillos', views.obtenerTodosLosPlatillos),
     path('recomendaciones/crearPlatillo', views.crearPlatillo),
     path('recomendaciones/actualizarPlatillo', views.actualizarPlatillo),
+    path('recomendaciones/eliminarPlatillo', views.eliminarPlatillo),
 ]
