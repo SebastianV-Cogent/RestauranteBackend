@@ -383,7 +383,7 @@ def crearPedido(request):
     idUsuario = payload.get('idUsuario')
     idUsuario_instancia = Usuario.objects.get(id=idUsuario)
     pedidoCreado = Pedidos(
-      usuario = idUsuario_instancia
+      usuario = idUsuario
     )
     pedidoCreado.save()
     return JsonResponse({"message": "Pedido agregado"}, safe=False)
