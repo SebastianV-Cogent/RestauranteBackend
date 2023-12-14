@@ -54,7 +54,7 @@ def actualizarUsuario(request):
 
 @csrf_exempt
 def obtenerUsuario(request):
-  if request.method=='GET':
+  if request.method=='POST':
     payload = json.loads(request.body.decode('utf-8'))
     telefono = payload.get('telefono')
     password=payload.get('password')
@@ -99,7 +99,7 @@ def actualizarSucursal(request):
 
 @csrf_exempt
 def obtenerSucursal(request):
-  if request.method=='GET':
+  if request.method=='POST':
     payload = json.loads(request.body.decode('utf-8'))
     id = payload.get('id')
     sucursal = list(Sucursales.objects.filter(id=id).values())
@@ -400,7 +400,7 @@ def obtenerTodosLosPedidos(request):
   
 @csrf_exempt
 def obtenerPedido(request):
-  if request.method=='GET':
+  if request.method=='POST':
     payload = json.loads(request.body.decode('utf-8'))
     id = payload.get('id')
     pedido = list(Pedidos.objects.filter(id=id).values())
