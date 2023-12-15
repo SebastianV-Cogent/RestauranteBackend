@@ -476,7 +476,7 @@ def crearPlatillo(request):
       costo = payload.get('costo'),
       url_imagen = payload.get('url_imagen'),
       platillo_dia = payload.get('platillo_dia'),
-      preferencias_id = idPreferencia_instancia
+      preferencias_id = idPreferencia
     )
     platilloCreado.save()
     return JsonResponse({"message": "Platillo agregado"}, safe=False)
@@ -495,7 +495,7 @@ def actualizarPlatillo(request):
       costo = payload.get('costo'),
       url_imagen = payload.get('url_imagen'),
       platillo_dia = payload.get('platillo_dia'),
-      preferencias_id = idPreferencia_instancia
+      preferencias_id = idPreferencia
     )
     platilloCreado.save()
     return JsonResponse({"message": "Platillo agregado"}, safe=False)
